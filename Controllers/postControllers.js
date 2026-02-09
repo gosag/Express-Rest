@@ -3,16 +3,20 @@ let posts=[
     { id:2, title:"Second Post"},
     { id:3, title:"Third Post"}
 ]
-export const getPosts=(req,res)=>{
+export const getPosts=(req,res,next)=>{
     if(posts.length===0){
-        return res.status(404).json({message:"No posts found"});
+        const error=new Error("No posts found");
+        error.status=404;
+        return next(error);
     }
     res.json(posts);
 }
-export const getPostsById=(req,res)=>{
+export const getPostsById=(req,res,next)=>{
     const postId=parseInt(req.params.id)
     if(isNaN(postId) || postId<1 || postId>posts.length){
-        return res.status(404).json({message:"Post not found"});
+        const error=new Error("Post not found");
+        error.status=404;
+        return next(error);
     }
     const post=posts.find(p=>p.id===postId)
     res.json(post);
@@ -23,16 +27,20 @@ export const createPost=(req,res)=>{
      title:req.body.title
     }
     if(!newPost.title){
-        return res.status(400).json({message:"Title is required"});
+        const error=new Error("Title is required");
+        error.status=400;
+        return next(error);
     }
     posts.push(newPost);
     res.status(201).json(newPost);
 }
-export const updatePost=(req,res)=>{
+export const updatePost=(req,res,next)=>{
     const postId=parseInt(req.params.id)
     const postIndex=posts.findIndex(p=>p.id===postId)
     if(postIndex===-1){
-        return res.status(404).json({message:"Post not found"});
+        const error=new Error("Post not found");
+        error.status=404;
+        return next(error);
     }
     posts[postIndex].title=req.body.title || posts[postIndex].title;
     posts[postIndex].id=postId;
@@ -42,7 +50,9 @@ export const deletePost=(req,res)=>{
     const postId=parseInt(req.params.id)
     const postIndex=posts.findIndex(p=>p.id===postId)
     if(postIndex===-1){
-        return res.status(404).json({message:"Post not found"});
+        const error=new Error("Post not found");
+        error.status=404;
+        return next(error);
     }
     const nonDeletedPost=posts.filter(post=>post.id!==postId)
     posts=nonDeletedPost;
