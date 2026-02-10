@@ -1,7 +1,10 @@
 import express from 'express';
-import router from './posts.js';
+import router from './routes/posts.js';
 import logger from './middlewares/logger.js';
 import errorHandler from './middlewares/errors.js';
+import connectDB from './config/db.js';
+//connect to the database
+connectDB();
 const app=express();
 const PORT=process.env.PORT ||8000;
 // to parse the incoming request body as JSON
