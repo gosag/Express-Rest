@@ -4,6 +4,11 @@ let posts=[
     { id:3, title:"Third Post"}
 ]
 export const getPosts=(req,res,next)=>{
+    const limit=parseInt(req.query.limit)
+        if(limit && !isNaN(limit)){
+            const limitedPosts=posts.slice(0,limit);
+            return res.json(limitedPosts);
+        }
     if(posts.length===0){
         const error=new Error("No posts found");
         error.status=404;
