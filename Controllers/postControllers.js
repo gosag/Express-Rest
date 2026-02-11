@@ -32,7 +32,7 @@ export const createPost=async (req,res,next)=>{
 }
 export const updatePost=async (req,res,next)=>{
     const postId=req.params.id;
-    const post=await Post.findByIdAndUpdate(postId,{title:req.body.title})
+    const post=await Post.findByIdAndUpdate(postId,{title:req.body.title},{ returnDocument: 'after' } )
     if(!post){
         const error=new Error("Post not found");
         error.status=404;
