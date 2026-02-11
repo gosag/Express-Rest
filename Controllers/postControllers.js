@@ -3,6 +3,7 @@ let posts=[
     { id:2, title:"Second Post"},
     { id:3, title:"Third Post"}
 ]
+import Post from '../models/Post.js';
 export const getPosts=(req,res,next)=>{
     const limit=parseInt(req.query.limit)
         if(limit && !isNaN(limit)){
