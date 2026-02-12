@@ -6,4 +6,22 @@ const postSchema=new mongoose.Schema({
     }}
 );
 const Post=mongoose.model("Post",postSchema);
-export default Post;
+const userSchema= new mongoose.Schema(({
+    Username:{
+        type:String,
+        required:true,
+        unique:true
+    },
+   password:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    }
+}));
+const User=mongoose.model("User",userSchema);
+
+export {Post,User};

@@ -1,4 +1,4 @@
-import Post from '../models/Post.js';
+import {Post} from '../models/Post.js';
 export const getPosts=async (req,res,next)=>{
     const limit=parseInt(req.query.limit)
         if(limit && !isNaN(limit)){
@@ -10,7 +10,7 @@ export const getPosts=async (req,res,next)=>{
 }
 export const getPostsById=async (req,res,next)=>{
    const postId=req.params.id;
-   const post=await findById(postId);
+   const post=await Post.findById(postId);
    if(!post){
        const error=new Error("Post not found");
        error.status=404;
