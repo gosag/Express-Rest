@@ -1,97 +1,16 @@
 import User from '../models/UserModel.js';
+import {getAllUsers,getUserById,createUser,updateUser,deleteUser} from "../controllers/userController.js"
 import express from "express";
 const userRouter=express.Router();
 //get all users
-userRouter.get('/',async(req,res,next)=>{
-    try{
-        const limit=req.query.limit;
-        let users;
-        if(limit &&!isNaN(limit)){
-            users=await User.find().limit(limit)
-            res.status(200).json(users)
-        }
-        else{
-            users=await User.find()
-            res.json(users) 
-        }
-           
-    }
-    catch(error){
-        next(error)
-    }
-    
-})
+userRouter.get('/',getAllUsers)
 //find a user by ID
-userRouter.get('/:id',async(req,res,next)=>{
-        try{
-           const userId=req.params.id;
-         const user=await User.findById(userId);
-         if(!user){
-            const error=new Error(`a user with Id of ${userId} is nowhere to be found😭`)
-            error.status=404;
-            return next(error);
-         }
-         res.json(user); 
-        }
-        catch(error){
-            if(error.name==="CastError"){
-                error.status=400;
-            }
-                next(error)
-        }
-})
+userRouter.get('/:id',getUserById)
 //create a new user
-userRouter.post("/",async (req,res,next)=>{
-    try{
-        const user=new User({
-        userName:req.body.userName,
-        password:req.body.password,
-        email:req.body.email
-    })
-    await user.save()
-    res.status(201).json(user)
-    }
-    catch(error){
-        if(error.name==="ValidationError"){
-            error.status=400;
-        }
-        if(error.name === "MongoServerError"){
-            error.status=409;
-        }
-        console.log("ERROR NAME:", error.name);
-        console.log(error);
-        next(error)
-    }
-})
+userRouter.post("/",createUser)
 //update a user by id
-userRouter.put("/:id",async(req,res,next)=>{
-    const userId=req.params.id;
-    const {userName,password,email}=req.body;
-    const updateFields={};
-    if(userName) updateFields.userName=userName;
-    if(password) updateFields.password=password;
-    if(email) updateFields.email=email;
-    const updatedUser=await User.findByIdAndUpdate(userId,
-        updateFields,
-        {new:true,runValidators:true}
-    )
-    if(!updatedUser){
-        const error=new Error("User not Found");
-        error.status=404;
-        return next(error);
-    }
-    res.json(updatedUser)
-})
+userRouter.put("/:id",updateUser)
 //delete a user by id
-userRouter.delete('/:id',async(req,res,next)=>{
-    const userId=req.params.id;
-    const deletedUser=await User.findByIdAndDelete(userId);
-    if(!deletedUser){
-        const error=new Error(`User with Id of ${userId} is not Found`)
-        error.status=404;
-        return next(error)
-    }
-    res.json(deletedUser);
-})
+userRouter.delete('/:id',deleteUser)
 export default userRouter;
 
