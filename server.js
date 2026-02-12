@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import router from './routes/posts.js';
+import userRouter from "./routes/user.js"
 import logger from './middlewares/logger.js';
 import errorHandler from './middlewares/errors.js';
 import connectDB from './config/db.js';
@@ -20,9 +21,9 @@ const __dirname=path.dirname(__filename);
 router.use(express.static(path.join(__dirname,'public'))); */
 //importing the routes
 app.use("/api/posts",router);
+app.use("/api/users",userRouter)
 //using the error handling middleware
 app.use(errorHandler);
-
 //connect to the database
 connectDB();
 //starting the server
