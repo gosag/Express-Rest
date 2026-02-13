@@ -21,7 +21,8 @@ export const getPostsById=async (req,res,next)=>{
 export const createPost=async (req,res,next)=>{
     try{
         const newPost=new Post({
-            title:req.body.title
+            title:req.body.title,
+            user:req.body.user
         });
         await newPost.save()
         res.status(201).json(newPost);

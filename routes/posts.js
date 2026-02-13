@@ -5,6 +5,8 @@ const router=express.Router();
 router.get('/',getPosts);
 //Get a specific post by ID
 router.get('/:id',getPostsById);
+//Get posts by user id
+
 //Create a new post
 router.post('/',createPost);
 //update a post by ID
