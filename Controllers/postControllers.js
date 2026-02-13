@@ -21,7 +21,7 @@ export const getPostsById=async (req,res,next)=>{
 export const getPostsByUserId=async(req,res,next)=>{
     try{
          const userId=req.params.id;
-         const postsByUserId=await Post.find({user:userId}).populate("user");
+         const postsByUserId=await Post.find({user:userId}).populate("user","userName email");
          if(!postsByUserId){
             const error=new Error("Posts under this user is is not found");
             error.status=404;
