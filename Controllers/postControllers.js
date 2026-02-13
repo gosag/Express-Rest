@@ -19,9 +19,20 @@ export const getPostsById=async (req,res,next)=>{
    res.status(200).json(post)
 }
 export const getPostsByUserId=async(req,res,next)=>{
-    const userId=req.params.id;
-    const postsByUser=await Post.find({user:userId}).populate("user");
-    res.json(postsByUser)
+    try{
+         const userId=req.params.id;
+         const postsByUserId=await Post.find({user:userId}).populate("user");
+         if(!postsByUserId){
+            const error=new Error("Posts under this user is is not found");
+            error.status=404;
+            return next(error)
+         }
+         res.json(postsByUserId)
+    }
+    catch(err){
+        next(err)
+    }
+   
 }
 export const createPost=async (req,res,next)=>{
     try{
