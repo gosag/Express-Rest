@@ -1,26 +1,26 @@
 Express-Rest
 
-A simple and scalable RESTful API built with Node.js, Express.js, and MongoDB (Mongoose).
+A simple RESTful API built with Node.js, Express.js, and MongoDB (Mongoose) — designed to be scalable, organized, and easy to extend.
 
-This project focuses on backend fundamentals like:
+This project demonstrates core backend fundamentals and clean architecture for building APIs.
 
-Clean architecture
+🧠 What It’s For
+
+This backend provides:
 
 CRUD operations
 
 Pagination
 
-Filtering
+Filtering & sorting
 
-Sorting
+Environment configuration handling
 
-Environment variable management
+Centralized error handling
 
-Error handling
+A scalable folder structure you can build on
 
-It is structured in a way that can scale into a production-ready backend.
-
-🚀 Tech Stack
+🛠 Tech Stack
 
 Node.js
 
@@ -30,102 +30,95 @@ MongoDB
 
 Mongoose
 
-dotenv
+🚀 Setup & Run
 
-📦 Installation
-1️⃣ Clone the repository
+Clone the repo
+
 git clone https://github.com/gosag/Express-Rest.git
 cd Express-Rest
-2️⃣ Install dependencies
-npm install
-3️⃣ Create .env file
 
-Create a .env file in the root directory:
+
+Install dependencies
+
+npm install
+
+
+Create a .env file in project root with:
 
 PORT=8000
 MONGO_URI=your_mongodb_connection_string
 NODE_ENV=development
 
-Example (local database):
 
-PORT=8000
-MONGO_URI=mongodb://localhost:27017/express-rest
-NODE_ENV=development
-4️⃣ Run the server
+Start dev server
+
 npm run dev
 
-Server will run on:
+
+Visit:
 
 http://localhost:8000
-📁 Project Structure
-Express-Rest/
-│
-├── controllers/      # Business logic
-├── routes/           # Route definitions
-├── models/           # Mongoose schemas
-├── middlewares/      # Custom middlewares (error handling, etc.)
-├── config/           # Database connection setup
-├── server.js         # Entry point
-├── package.json
-└── .env              # Environment variables (not committed)
-🔥 API Endpoints
-Method	Endpoint	Description
-GET	/posts	Get all posts
-GET	/posts/:id	Get single post
-POST	/posts	Create post
-PUT	/posts/:id	Update post
-DELETE	/posts/:id	Delete post
-📄 Pagination
 
-Supports pagination via query parameters:
+
+📁 Folder Structure
+Express-Rest/
+├── controllers/        # business logic
+├── routes/             # API route definitions
+├── models/             # Mongoose schemas
+├── middlewares/        # custom middlewares (errors, auth, etc.)
+├── config/             # database connection setup
+├── public/             # static assets
+├── server.js           # entry point
+├── .env                # config (not committed)
+├── package.json
+└── README.md
+
+
+📡 API Endpoints
+Method	Endpoint	Action
+GET	/posts	Get all posts
+GET	/posts/:id	Get one post
+POST	/posts	Create a new post
+PUT	/posts/:id	Update a post
+DELETE	/posts/:id	Remove a post
+📊 Pagination, Filtering & Sorting
+Pagination
+
+Use query params:
 
 GET /posts?page=2&limit=10
+
 
 Response includes:
 
 {
-  "currentPage": 2,
-  "totalItems": 50,
-  "totalPages": 5,
-  "posts": [...]
+  currentPage,
+  totalItems,
+  totalPages,
+  posts: [...]
 }
 
-Pagination is protected with:
 
-Default limit
+Filtering
 
-Maximum limit cap
+Filter fields in query:
 
-Safe page validation
+GET /posts?author=123&category=tech
 
-🔎 Filtering
 
-Filter data using query parameters:
+Sorting
 
-GET /posts?author=123
-GET /posts?category=tech
-
-Filtering happens before pagination for performance.
-
-📊 Sorting
-
-Sort results dynamically:
+Sort results:
 
 GET /posts?sortBy=createdAt&order=desc
 
-asc → ascending
 
-desc → descending
+Allowed sort fields only.
 
-Only allowed fields are sortable to prevent misuse.
-
-🌍 Environment Variables
-Variable	Description
+⚠️ Environment Variables
+Key	Purpose
 PORT	Server port
 MONGO_URI	MongoDB connection string
-NODE_ENV	Environment mode
-
-⚠️ Never commit your .env file.
 
 🛡 Error Handling
 
@@ -133,50 +126,26 @@ Centralized error middleware
 
 Proper HTTP status codes
 
-Structured JSON responses
+JSON error responses
 
-Graceful handling of invalid IDs & database errors
+Handles bad IDs & DB errors gracefully
 
-📈 Scalability Considerations
+🔮 Future Ideas
 
-Indexed fields for faster queries
-
-Safe pagination
-
-Controlled sorting
-
-Modular architecture
-
-Separation of config and logic
-
-🧠 What This Project Demonstrates
-
-This project shows understanding of:
-
-REST architecture
-
-Mongoose schema design
-
-Query optimization (pagination, filtering, sorting)
-
-Environment configuration
-
-Clean backend structure
-
-🔧 Future Improvements
+This project is a strong base. You can add:
 
 JWT Authentication
 
 Role-based access control
 
-Input validation (Joi / Zod)
+Input validation (Joi/Zod)
+
+Swagger docs
 
 Rate limiting
 
-Swagger documentation
+Tests (unit + integration)
 
-Unit & integration tests
+📄 License
 
-📜 License
-
-Open-source. Free to use and modify.
+Open-source — free to use and modify
